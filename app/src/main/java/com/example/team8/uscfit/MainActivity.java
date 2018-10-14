@@ -20,18 +20,19 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText("Todo");
-//
-
+//                    mTextMessage.setText("Todo");
+                    setContentView(R.layout.todo_layout);
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText("Calories");
+//                    mTextMessage.setText("Calories");
 
+                    setContentView(R.layout.calorie_layout);
 
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText("Steps");
-//
+//                    mTextMessage.setText("Steps");
+                    setContentView(R.layout.steps_layout);
+
 
                     return true;
             }
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+//        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
