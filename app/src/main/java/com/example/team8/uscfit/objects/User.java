@@ -10,6 +10,7 @@ public class User{
     private int height;
     private int gender;
     private double bmi;
+    private double caloriesBurned;
     private Calendar calendar;
 //    private ArrayList<Goal> goals;
 
@@ -53,6 +54,10 @@ public class User{
     public void setBmi(double bmi) {
         this.bmi = bmi;
     }
+
+    public void setCaloriesBurned(double caloriesBurned) {this.caloriesBurned = caloriesBurned;}
+
+    public double getCaloriesBurned() {return caloriesBurned;}
 
     public Calendar getCalendar() {
         return calendar;
