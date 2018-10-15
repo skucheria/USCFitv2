@@ -10,7 +10,10 @@ import android.widget.TextView;
 import android.hardware.*;
 import android.app.Activity;
 import android.content.Intent;
+import android.widget.*;
+import android.view.*;
 
+import android.content.DialogInterface.OnClickListener;
 import com.example.team8.uscfit.pedometer.*;
 
 public class MainActivity extends FragmentActivity implements SensorEventListener, StepListener {
@@ -22,7 +25,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     private Sensor accel;
     private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
-
+    private TextView TvStep;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -30,16 +33,16 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    setContentView(R.layout.todo_layout);
+//                    setContentView(R.layout.todo_layout);
                     return true;
                 case R.id.navigation_dashboard:
 
-                    setContentView(R.layout.calorie_layout);
+//                    setContentView(R.layout.calorie_layout);
 
                     return true;
                 case R.id.navigation_notifications:
 //                    mTextMessage.setText("Steps");
-                    setContentView(R.layout.steps_layout);
+//                    setContentView(R.layout.steps_layout);
 
 
                     return true;
@@ -51,17 +54,47 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
 
 
+         TvStep = (TextView) findViewById(R.id.tv_steps);
+//        Button BtnStart = (Button) findViewById(R.id.btn_start);
+//        Button BtnStop = (Button) findViewById(R.id.btn_stop);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        numSteps = 0;
+        sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
 
-//        mTextMessage = (TextView) findViewById(R.id.message);
+        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+
+
+
+//        BtnStart.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//
+//
+//            }
+//        });
+//
+//
+//        BtnStop.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//
+//                sensorManager.unregisterListener(MainActivity.this);
+//
+//            }
+//        });
+
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
@@ -69,7 +102,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     @Override
     public void step(long timeNs) {
         numSteps++;
-//        TvSteps.setText(TEXT_NUM_STEPS + numSteps);
+        TvStep.setText(TEXT_NUM_STEPS + numSteps);
     }
 
     @Override
