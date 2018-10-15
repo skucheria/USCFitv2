@@ -64,35 +64,12 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
 
          TvStep = (TextView) findViewById(R.id.tv_steps);
-//        Button BtnStart = (Button) findViewById(R.id.btn_start);
-//        Button BtnStop = (Button) findViewById(R.id.btn_stop);
 
         numSteps = 0;
         sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
 
         TvStep.setText(TEXT_NUM_STEPS + numSteps);
 
-
-
-//        BtnStart.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View arg0) {
-//
-//
-//            }
-//        });
-//
-//
-//        BtnStop.setOnClickListener(new OnClickListener() {
-//
-//            @Override
-//            public void onClick(View arg0) {
-//
-//                sensorManager.unregisterListener(MainActivity.this);
-//
-//            }
-//        });
 
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
