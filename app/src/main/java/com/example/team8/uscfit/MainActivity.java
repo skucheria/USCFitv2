@@ -89,8 +89,28 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            simpleStepDetector.updateAccel(
-                    event.timestamp, event.values[0], event.values[1], event.values[2]);
+            System.out.println("DETECTED ACCEL CHANGE");
+
+            float x,y,z;
+            x = event.values[0];
+            y = event.values[1];
+            z = event.values[2];
+
+            System.out.println("X acceleration value: " + x);
+            System.out.println("Y acceleration value: " + y);
+            System.out.println("Z acceleration value: " + z);
+
+
+
+            if(x > .450 || x < -.450){ //consider this a step
+                this.step(0);
+            }
+
+
+
+//            simpleStepDetector.updateAccel(
+//                    event.timestamp, event.values[0], event.values[1], event.values[2]);
+
         }
     }
 
