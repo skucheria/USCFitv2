@@ -3,6 +3,7 @@ package com.example.team8.uscfit;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -26,30 +27,30 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
     private TextView TvStep;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-//                    setContentView(R.layout.todo_layout);
+                    switch (item.getItemId()) {
+                        case R.id.nav_todo:
+                            selectedFragment = new Todo_Fragment();
+                            break;
+                        case R.id.nav_calories:
+                            selectedFragment = new Calories_Fragment();
+                            break;
+                        case R.id.nav_steps:
+                            selectedFragment = new Steps_Fragment();
+                            break;
+                    }
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            selectedFragment).commit();
+
                     return true;
-                case R.id.navigation_dashboard:
-
-//                    setContentView(R.layout.calorie_layout);
-
-                    return true;
-                case R.id.navigation_notifications:
-//                    mTextMessage.setText("Steps");
-//                    setContentView(R.layout.steps_layout);
-
-
-                    return true;
-            }
-            return false;
-        }
-    };
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
 
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setOnNavigationItemSelectedListener(navListener);
     }
 
     @Override
