@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.hardware.*;
+import android.view.Menu;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.*;
@@ -33,18 +34,13 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    setContentView(R.layout.todo_layout);
+                    setContentView(R.layout.todo_layout);
                     return true;
                 case R.id.navigation_dashboard:
-
-//                    setContentView(R.layout.calorie_layout);
-
+                    setContentView(R.layout.calorie_layout);
                     return true;
                 case R.id.navigation_notifications:
-//                    mTextMessage.setText("Steps");
-//                    setContentView(R.layout.steps_layout);
-
-
+                    setContentView(R.layout.steps_layout);
                     return true;
             }
             return false;
@@ -68,7 +64,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
         numSteps = 0;
         sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
 
-        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+        //TvStep.setText(TEXT_NUM_STEPS + numSteps);
 
 
 
@@ -79,7 +75,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     @Override
     public void step(long timeNs) {
         numSteps++;
-        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+        //TvStep.setText(TEXT_NUM_STEPS + numSteps);
     }
 
     @Override
