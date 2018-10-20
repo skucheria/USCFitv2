@@ -6,9 +6,9 @@ public class StepDetector {
     private static final int VEL_RING_SIZE = 10;
 
     // change this threshold according to your sensitivity preferences
-    private static final float STEP_THRESHOLD = 50f;
+    private static final float STEP_THRESHOLD = 0.3f;
 
-    private static final int STEP_DELAY_NS = 250000000;
+    private static final float STEP_DELAY_NS = 250000000f;
 
     private int accelRingCounter = 0;
     private float[] accelRingX = new float[ACCEL_RING_SIZE];
@@ -57,8 +57,13 @@ public class StepDetector {
 
         float velocityEstimate = StepFilter.sum(velRing);
 
-        if (velocityEstimate > STEP_THRESHOLD && oldVelocityEstimate <= STEP_THRESHOLD
-                && (timeNs - lastStepTimeNs > STEP_DELAY_NS)) {
+//        listener.step(timeNs);
+//        lastStepTimeNs = timeNs;  && oldVelocityEstimate <= STEP_THRESHOLD
+
+        System.out.println("Velocity estimate: " + velocityEstimate);
+
+        if (velocityEstimate > STEP_THRESHOLD && (timeNs - lastStepTimeNs > STEP_DELAY_NS)) {
+            System.out.println("Actually increasing the steps");
             listener.step(timeNs);
             lastStepTimeNs = timeNs;
         }

@@ -89,7 +89,7 @@ public class MainActivity extends FragmentActivity implements SensorEventListene
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            System.out.println("DETECTED ACCEL CHANGE");
+//            System.out.println("DETECTED ACCEL CHANGE");
 
 //            float x,y,z;
 //            x = event.values[0];
