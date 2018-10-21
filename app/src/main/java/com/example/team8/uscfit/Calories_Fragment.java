@@ -1,5 +1,6 @@
 package com.example.team8.uscfit;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import android.os.Bundle;
@@ -15,5 +16,16 @@ public class Calories_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.calorie_layout, container, true);
+    }
+
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
     }
 }
