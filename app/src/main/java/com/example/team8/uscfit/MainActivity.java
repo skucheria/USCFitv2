@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         frag = fragMan.findFragmentById(R.id.fragment_container);
 
         frag = new Steps_Fragment();
-//        ((Steps_Fragment) frag).increaseSteps(numSteps);
+        ((Steps_Fragment) frag).increaseSteps(numSteps);
 
     }
 
