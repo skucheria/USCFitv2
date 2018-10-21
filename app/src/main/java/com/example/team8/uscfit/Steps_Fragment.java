@@ -26,7 +26,7 @@ import android.content.DialogInterface.OnClickListener;
 import com.example.team8.uscfit.pedometer.*;
 
 
-public class Steps_Fragment extends Fragment implements SensorEventListener, StepListener{
+public class Steps_Fragment extends Fragment {
 
 
     private StepDetector simpleStepDetector;
@@ -41,41 +41,11 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
-
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        simpleStepDetector = new StepDetector();
-        simpleStepDetector.registerListener(this);
-
-        TvStep = (TextView) findViewById(R.id.tv_steps);
-
-
-
         return inflater.inflate(R.layout.steps_layout, container, false);
     }
 
 
 
-    @Override
-    public void step(long timeNs) {
-        numSteps++;
-        TvStep.setText(TEXT_NUM_STEPS + numSteps);
-    }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            System.out.println("DETECTED ACCEL CHANGE");
-            simpleStepDetector.updateAccel(
-                    event.timestamp, event.values[0], event.values[1], event.values[2]);
-
-        }
-    }
 
 }

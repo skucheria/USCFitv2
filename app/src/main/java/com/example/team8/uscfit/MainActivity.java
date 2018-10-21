@@ -19,7 +19,7 @@ import android.view.*;
 import android.content.DialogInterface.OnClickListener;
 import com.example.team8.uscfit.pedometer.*;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener{
 
     private TextView mTextMessage;
     private StepDetector simpleStepDetector;
@@ -78,20 +78,49 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             }
         });
+
+
+
+        setupAccel();
+
     }
 
-//        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-//        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//        simpleStepDetector = new StepDetector();
-//        simpleStepDetector.registerListener(this);
-//
-//        //TvStep = (TextView) findViewById(R.id.tv_steps);
-//
-//        numSteps = 0;
-//        sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
-//
-//        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+    public void setupAccel(){
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        simpleStepDetector = new StepDetector();
+        simpleStepDetector.registerListener(this);
 
+        TvStep = (TextView) findViewById(R.id.tv_steps);
+
+        numSteps = 0;
+        sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
+
+        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+    }
+
+//
+
+
+    @Override
+    public void step(long timeNs) {
+        numSteps++;
+        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            System.out.println("DETECTED ACCEL CHANGE");
+            simpleStepDetector.updateAccel(
+                    event.timestamp, event.values[0], event.values[1], event.values[2]);
+
+        }
+    }
 
 
 
