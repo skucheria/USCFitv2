@@ -1,5 +1,6 @@
 package com.example.team8.uscfit;
 
+import android.media.tv.TvInputService;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,12 +41,27 @@ public class Steps_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.steps_layout, container, false);
+
+
+
+        View view = inflater.inflate(R.layout.steps_layout, container, false);
+
+        numSteps = 0;
+
+        TvStep = (TextView) view.findViewById(R.id.tv_steps);
+        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+
+
+
+        return view;
     }
 
 
 
+    public void increaseSteps(int steps){
+        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+
+    }
 
 
 }
