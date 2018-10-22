@@ -1,7 +1,11 @@
 package com.example.team8.uscfit;
 
+<<<<<<< HEAD
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+=======
+import android.content.Context;
+>>>>>>> 36575abd03fe4a99fdc68e8c8bd5c9c12db790ad
 import android.support.v4.app.Fragment;
 
 import android.os.Bundle;
@@ -80,5 +84,16 @@ public class Calories_Fragment extends Fragment {
         for (int i = 0; i < 6; i++) {
             activityToCaloriesBurned.put(physicalActivities[i], metValues[i]);
         }
+    }
+
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
     }
 }

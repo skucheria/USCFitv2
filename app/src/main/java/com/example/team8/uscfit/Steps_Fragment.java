@@ -1,5 +1,6 @@
 package com.example.team8.uscfit;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,5 +14,16 @@ public class Steps_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.steps_layout, container, true);
+    }
+
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
     }
 }
