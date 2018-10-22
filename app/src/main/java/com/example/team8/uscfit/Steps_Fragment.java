@@ -52,11 +52,6 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
 
         setupAccel();
 
-
-
-//        int s = getActivity().getIntent().getExtras().getInt("step");
-//        System.out.println("got number of steps: " + s);
-
         return view;
     }
 
@@ -72,19 +67,6 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
 
     }
 
-
-
-//    BroadcastReceiver mReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            System.out.println("GOING INTO THIS RECEIVER FUNCTION");
-////            if ("steps".equals(intent.getAction())) {
-////                System.out.println("Received an intent message!");
-////                int s = intent.getIntExtra("step", 0);
-////                TvStep.setText(TEXT_NUM_STEPS + s);
-////            }
-//        }
-//    };
 
     @Override
     public void step(long timeNs) {
