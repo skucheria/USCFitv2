@@ -33,12 +33,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private FragmentManager fm;
     private Fragment f;
     private FragmentTransaction ft;
+    private Bundle b2;
+    private Intent myIntent;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupAccel();
+        numSteps=0;
+//        setupAccel();
+//        myIntent = new Intent(MainActivity.this, Steps_Fragment.class);
+//        myIntent.putExtra("step", numSteps);
+//        startActivity(myIntent);
 
         setContentView(R.layout.activity_main);
         bottomMenu = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -47,7 +53,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ft = fm.beginTransaction();
         if (f == null) {
             f = new Steps_Fragment();
+//            b2 = new Bundle();
+//            b2.putInt("step", 0);
+//            f.setArguments(b2);
             ft.add(R.id.fragment_container, f);
+
         }
         else {
             ft.replace(R.id.fragment_container, f);
@@ -61,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     ft = fm.beginTransaction();
                     f = new Steps_Fragment();
                     ft.replace(R.id.fragment_container, f);
+//                    savedInstanceState.putInt("step", numSteps);
+//                    f.setArguments(savedInstanceState);
+//                    ft.add(R.id.fragment_container, f);
                     ft.addToBackStack(null);
                     ft.commit();
                 }
@@ -82,8 +95,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-//        Intent intent = new Intent(this,  MainActivity.class);
-//        startActivityForResult(intent, 1);
+
 
     }
 
@@ -98,29 +110,46 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-//
-
 
     @Override
     public void step(long timeNs) {
         numSteps++;
-//
-//        FragmentManager fragMan;
-//        Fragment frag;
-//
-//        fragMan = getSupportFragmentManager();
-//        frag = fragMan.findFragmentById(R.id.fragment_container);
-//
-//        frag = new Steps_Fragment();
-//        ((Steps_Fragment) frag).increaseSteps(numSteps);
-        sendBroadcast(new Intent("action_location_updated"));
+//        sendBroadcast(new Intent("action_location_updated"));
 
+//        myIntent.putExtra("step", numSteps);
+//        startActivity(myIntent);
+
+//        sendData();
+
+//        Steps_Fragment stepFrag = new Steps_Fragment();
+//        b2 = new Bundle();
+//        b2.putInt("step", numSteps);
+//        stepFrag.setArguments(b2);
+//        ft.add(R.id.fragment_container, stepFrag);
+//        ft.commit();
+//
 
 
 //        Steps_Fragment fragment_obj = (Steps_Fragment) getSupportFragmentManager().
 //                findFragmentById(R.id.fragment_container);
 //
 //        fragment_obj.increaseSteps(numSteps);
+    }
+
+//    public void sendData(){
+//        Bundle b = new Bundle();
+//        b.putInt("step", numSteps);
+//
+//        Steps_Fragment stepFrag = new Steps_Fragment();
+//        stepFrag.setArguments(b);
+//
+//        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, stepFrag).commit();
+//
+//
+//    }
+
+    public int getSteps(){
+        return this.numSteps;
     }
 
     @Override

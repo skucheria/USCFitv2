@@ -57,10 +57,6 @@ public class Calories_Fragment extends Fragment {
                 calorieToPrint = valueFromHash * timeCompleteDouble;
                 String calorieToPrintString = Double.toString(calorieToPrint);
                 tv = getView().findViewById(R.id.textView2);
-                if(tv == null){
-                    System.out.println("TEXT VIEW IS NULL");
-                }
-
                 tv.setText("BMI: " + bmiToPrintString + "\n" + "Calories Burned: "
                         + calorieToPrintString);
             }

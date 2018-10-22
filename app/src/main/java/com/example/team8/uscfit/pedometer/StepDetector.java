@@ -32,7 +32,6 @@ public class StepDetector {
         currentAccel[1] = y;
         currentAccel[2] = z;
 
-        System.out.println("UPDATING THE ACCEL");
 
         // First step is to update our guess of where the global z vector is.
         accelRingCounter++;
