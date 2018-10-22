@@ -16,6 +16,8 @@ import android.view.*;
 import android.content.DialogInterface.OnClickListener;
 import com.example.team8.uscfit.pedometer.*;
 
+import java.util.HashMap;
+
 public class MainActivity extends FragmentActivity implements SensorEventListener, StepListener {
 
     private TextView mTextMessage;

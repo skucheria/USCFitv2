@@ -7,4 +7,21 @@
     <string name="calories">Calories Burned</string>
     <string name="steps">Steps</string>
 
+    <string-array name="possibleActivities">
+        <item>Basketball</item>
+        <item>Swimming</item>
+        <item>Running</item>
+        <item>Biking</item>
+        <item>Walking</item>
+        <item>Soccer</item>
+    </string-array>
+
+    <string name="activity_completed">Activity Completed</string>
+    <string name="gender_string">Gender...</string>
+    <string name="height_string">Height in Meters...</string>
+    <string name="weight_string">Weight in Kilograms...</string>
+    <string name="time_string">Time Spent Completing Activity...</string>
+    <string name="calorie_counter">Calorie Counter</string>
+    <string name="submit_text">Submit</string>
+
 </resources>
