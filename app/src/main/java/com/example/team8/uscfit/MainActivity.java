@@ -22,12 +22,12 @@ import com.example.team8.uscfit.pedometer.*;
 public class MainActivity extends AppCompatActivity{
 
     private TextView mTextMessage;
-    private StepDetector simpleStepDetector;
-    private SensorManager sensorManager;
-    private Sensor accel;
-    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
+//    private StepDetector simpleStepDetector;
+//    private SensorManager sensorManager;
+//    private Sensor accel;
+//    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
-    private TextView TvStep;
+//    private TextView TvStep;
 
     private BottomNavigationView bottomMenu;
     private FragmentManager fm;
@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        numSteps=0;
-
+        numSteps = 0;
         setContentView(R.layout.activity_main);
         bottomMenu = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         fm = getSupportFragmentManager();
@@ -84,8 +82,14 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             }
         });
+    }
 
+    public void updateSteps(int num){
+        this.numSteps = num;
+    }
 
-
+    public int sendSteps(){
+        return this.numSteps;
     }
 }
+

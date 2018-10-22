@@ -40,13 +40,26 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        this.numSteps = ((MainActivity) getActivity()).sendSteps();
+//        if(savedInstanceState != null){
+//            numSteps = savedInstanceState.getInt("steps", 0);
+//        }
+//        else{
+//            System.out.println("THE STATE FOR STEPS COUNTER FRAGMENT WAS NULL");
+//        }
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.steps_layout, container, false);
 
 
-        numSteps = 0;
+//        numSteps = 0;
         TvStep = (TextView) view.findViewById(R.id.tv_steps);
         TvStep.setText(TEXT_NUM_STEPS + numSteps );
 
@@ -62,7 +75,6 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
 
-        numSteps = 0;
         sensorManager.registerListener(Steps_Fragment.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
 
     }
@@ -72,6 +84,14 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
     public void step(long timeNs) {
         numSteps++;
         TvStep.setText(TEXT_NUM_STEPS + numSteps);
+//        Bundle b = new Bundle();
+//        b.putInt("steps", numSteps);
+//        this.setArguments(b);
+//        this.getFragmentManager().beginTransaction().replace(R.id.fragment_container, this).commit();
+
+        ((MainActivity) getActivity()).updateSteps(numSteps);
+
+
     }
 
     @Override
@@ -87,5 +107,10 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
         }
     }
 
-
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("steps", numSteps);
+        System.out.println("ACTUALLY SAVING THE STATE");
+    }
 }
