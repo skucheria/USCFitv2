@@ -19,6 +19,8 @@ import android.view.*;
 import android.content.DialogInterface.OnClickListener;
 import com.example.team8.uscfit.pedometer.*;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity{
 
     private TextView mTextMessage;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity{
 //    private Sensor accel;
 //    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
+    private ArrayList<String> todoItems;
+
 //    private TextView TvStep;
 
     private BottomNavigationView bottomMenu;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         numSteps = 0;
+        todoItems = new ArrayList<String>();
         setContentView(R.layout.activity_main);
         bottomMenu = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         fm = getSupportFragmentManager();
@@ -90,6 +95,14 @@ public class MainActivity extends AppCompatActivity{
 
     public int sendSteps(){
         return this.numSteps;
+    }
+
+    public void updateToDo(ArrayList<String> items){
+        this.todoItems = items;
+    }
+
+    public ArrayList<String> sendToDo(){
+        return this.todoItems;
     }
 }
 

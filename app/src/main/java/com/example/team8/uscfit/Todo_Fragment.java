@@ -34,6 +34,21 @@ public class Todo_Fragment extends Fragment {
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        items = ((MainActivity) getActivity()).sendToDo();
+
+//        if(savedInstanceState != null){
+//            numSteps = savedInstanceState.getInt("steps", 0);
+//        }
+//        else{
+//            System.out.println("THE STATE FOR STEPS COUNTER FRAGMENT WAS NULL");
+//        }
+    }
+
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,17 +128,25 @@ public class Todo_Fragment extends Fragment {
                 }
             }
         });
+
+//        ArrayList<String> newList = new ArrayList<String>();
+//        for(int i=0 ; i<itemsAdapter.getCount() ; i++){
+//            newList.add(itemsAdapter.getItem(i));
+//        }
+//
+//        ((MainActivity) getActivity()).updateToDo(newList);
         return view;
     }
 
    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         lvItems = getView().findViewById(R.id.lvItems);
-        items = new ArrayList<>();
+
+//       items = new ArrayList<>();
         itemsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-        items.add("First Activity");
-        items.add("Second Activity");
+//        items.add("First Activity");
+//        items.add("Second Activity");
         setupListViewListener();
 
     }
@@ -138,6 +161,9 @@ public class Todo_Fragment extends Fragment {
                         items.remove(pos);
                         // Refresh the adapter
                         itemsAdapter.notifyDataSetChanged();
+
+                        ((MainActivity) getActivity()).updateToDo(items);
+
                         // Return true consumes the long click event (marks it handled)
                         return true;
                     }
