@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setupAccel();
+
         setContentView(R.layout.activity_main);
         bottomMenu = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         fm = getSupportFragmentManager();
@@ -79,9 +82,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-
-
-        setupAccel();
+//        Intent intent = new Intent(this,  MainActivity.class);
+//        startActivityForResult(intent, 1);
 
     }
 
@@ -102,16 +104,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void step(long timeNs) {
         numSteps++;
+//
+//        FragmentManager fragMan;
+//        Fragment frag;
+//
+//        fragMan = getSupportFragmentManager();
+//        frag = fragMan.findFragmentById(R.id.fragment_container);
+//
+//        frag = new Steps_Fragment();
+//        ((Steps_Fragment) frag).increaseSteps(numSteps);
+        sendBroadcast(new Intent("action_location_updated"));
 
-        FragmentManager fragMan;
-        Fragment frag;
 
-        fragMan = getSupportFragmentManager();
-        frag = fragMan.findFragmentById(R.id.fragment_container);
 
-        frag = new Steps_Fragment();
-        ((Steps_Fragment) frag).increaseSteps(numSteps);
-
+//        Steps_Fragment fragment_obj = (Steps_Fragment) getSupportFragmentManager().
+//                findFragmentById(R.id.fragment_container);
+//
+//        fragment_obj.increaseSteps(numSteps);
     }
 
     @Override
@@ -121,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            System.out.println("DETECTED ACCEL CHANGE");
             simpleStepDetector.updateAccel(
                     event.timestamp, event.values[0], event.values[1], event.values[2]);
 

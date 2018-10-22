@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
+
 
 import java.util.HashMap;
 
@@ -33,9 +35,9 @@ public class Calories_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         populateHashMap();
-        View view = inflater.inflate(R.layout.calorie_layout, container, true);
+        View view = inflater.inflate(R.layout.calorie_layout, container, false);
         Button button = view.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText heightEditText = getView().findViewById(R.id.heightMeters);
@@ -44,7 +46,7 @@ public class Calories_Fragment extends Fragment {
                 EditText weightEditText = getView().findViewById(R.id.weightKilograms);
                 String weightText = weightEditText.getText().toString();
                 double weightDouble = Double.parseDouble(weightText);
-                Spinner userInputSpinner = getView().findViewById(R.id.spinnerID);
+                Spinner userInputSpinner = getView().findViewById(R.id.spinner);
                 String spinnerInput = userInputSpinner.getSelectedItem().toString();
                 EditText timeCompleteEditText = getView().findViewById(R.id.timeCompleteID);
                 String timeCompleteText = timeCompleteEditText.getText().toString();
@@ -54,7 +56,11 @@ public class Calories_Fragment extends Fragment {
                 double valueFromHash = activityToCaloriesBurned.get(spinnerInput);
                 calorieToPrint = valueFromHash * timeCompleteDouble;
                 String calorieToPrintString = Double.toString(calorieToPrint);
-                tv = v.findViewById(R.id.textView2);
+                tv = getView().findViewById(R.id.textView2);
+                if(tv == null){
+                    System.out.println("TEXT VIEW IS NULL");
+                }
+
                 tv.setText("BMI: " + bmiToPrintString + "\n" + "Calories Burned: "
                         + calorieToPrintString);
             }

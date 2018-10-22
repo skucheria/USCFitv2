@@ -20,6 +20,9 @@ import android.widget.TextView;
 import android.hardware.*;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.widget.*;
 import android.view.*;
 
@@ -28,8 +31,6 @@ import com.example.team8.uscfit.pedometer.*;
 
 
 public class Steps_Fragment extends Fragment {
-
-
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
     private Sensor accel;
@@ -41,8 +42,6 @@ public class Steps_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
 
         View view = inflater.inflate(R.layout.steps_layout, container, false);
 
@@ -57,11 +56,21 @@ public class Steps_Fragment extends Fragment {
     }
 
 
-
     public void increaseSteps(int steps){
         TvStep.setText(TEXT_NUM_STEPS + numSteps);
 
     }
+
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("action_location_updated".equals(intent.getAction())) {
+                System.out.println("Received an intent message!");
+            }
+        }
+    };
+//    IntentFilter filter = new IntentFilter("action_location_updated");
+//    registerReceiver(mReceiver, filter);
 
 
 }
