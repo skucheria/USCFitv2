@@ -91,12 +91,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
 
-        TvStep = (TextView) findViewById(R.id.tv_steps);
-
         numSteps = 0;
         sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
 
-        TvStep.setText(TEXT_NUM_STEPS + numSteps);
     }
 
 //
@@ -105,7 +102,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void step(long timeNs) {
         numSteps++;
-        TvStep.setText(TEXT_NUM_STEPS + numSteps);
+
+        FragmentManager fragMan;
+        Fragment frag;
+
+        fragMan = getSupportFragmentManager();
+        frag = fragMan.findFragmentById(R.id.fragment_container);
+
+        frag = new Steps_Fragment();
+        ((Steps_Fragment) frag).increaseSteps(numSteps);
+
     }
 
     @Override
