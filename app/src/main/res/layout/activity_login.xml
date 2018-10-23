@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="281dp"
-        android:text="Button" />
+        android:text="Log in" />
 
     <EditText
         android:id="@+id/editText"
@@ -26,6 +26,7 @@
         android:layout_marginLeft="72dp"
         android:layout_marginTop="38dp"
         android:ems="10"
+        android:hint="Email"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -36,6 +37,16 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="130dp"
         android:ems="10"
+        android:hint="Password"
         android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="96dp"
+        android:text="Sign Up" />
 
 </RelativeLayout>

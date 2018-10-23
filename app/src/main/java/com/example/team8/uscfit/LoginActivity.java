@@ -71,13 +71,17 @@ public class LoginActivity extends AppCompatActivity {
         pass = findViewById(R.id.editText2);
 
 
-        Button b = findViewById(R.id.button2);
-        b.setOnClickListener(new View.OnClickListener() {
+        Button login = findViewById(R.id.button2);
+        login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 signIn(email.getText().toString(), pass.getText().toString());
+            }
+        });
 
-//                signIn(email.getText().toString(), pass.getText().toString());
+        Button signup = findViewById(R.id.button3);
+        signup.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                createAccount(email.getText().toString(), pass.getText().toString());
             }
         });
     }
@@ -96,67 +100,16 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        System.out.println("IN LOGIN FUNCTION");
-
-
-//                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         if(!task.isSuccessful()) {
-//                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-//                            errorTextView.setText(task.getException().getMessage());
-                            System.out.println("LOGIN IS NOT SUCESSFUL");
-                            System.out.println("LOGIN IS NOT SUCESSFUL");
-                            System.out.println("LOGIN IS NOT SUCESSFUL");
-                            System.out.println("LOGIN IS NOT SUCESSFUL");
-                            System.out.println("LOGIN IS NOT SUCESSFUL");
-                            System.out.println("LOGIN IS NOT SUCESSFUL");
                             System.out.println("LOGIN IS NOT SUCESSFUL");
 
                         }
                         else {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            System.out.println("LOGIN SUCESSFUL");
-                            System.out.println("LOGIN SUCESSFUL");
-                            System.out.println("LOGIN SUCESSFUL");
-                            System.out.println("LOGIN SUCESSFUL");
-                            System.out.println("LOGIN SUCESSFUL");
-                            System.out.println("LOGIN SUCESSFUL");
-                            System.out.println("LOGIN SUCESSFUL");
-
 
                             sendMessage();
 
-                            if(user.isEmailVerified()) {
-                                // If the user pressed back to get back to login, we want to clear singleton data.
-//                                RelevantUserSingleton.getInstance(this).clear();
-
-                                // Create intent to go to main Home Activity of the app.
-//                                i = new Intent(this, MainActivity.class);
-//                                startActivity(i);
-                                System.out.println("LOGIN SUCESSFUL");
-                                System.out.println("LOGIN SUCESSFUL");
-                                System.out.println("LOGIN SUCESSFUL");
-                                System.out.println("LOGIN SUCESSFUL");
-                                System.out.println("LOGIN SUCESSFUL");
-                                System.out.println("LOGIN SUCESSFUL");
-                                System.out.println("LOGIN SUCESSFUL");
-
-
-                                sendMessage();
-
-                            }
-                            else {
-//                                errorTextView.setText("Your email isn't verified yet, so we just resent you a verification email!");
-                                user.sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-//                                                    Log.d(TAG, "Email sent.");
-                                                }
-                                            }
-                                        });
-                            }
                         }
                     }
                 });
@@ -171,23 +124,12 @@ public class LoginActivity extends AppCompatActivity {
                         // if sign in fails, display message.
                         // if sign in succeeds, state listener is notified and logic to handle signed in user is handled in listener
                         if(!task.isSuccessful()) {
-//                            errorTextView.setText(task.getException().getMessage());
+                            System.out.println("Created account NOT succesful");
                         }
                         else {
-//                            sendEmail();
-//
                             System.out.println("Created user sucessfully");
                             sendMessage();
 
-//                            errorTextView.setTextColor(Color.parseColor("#228B22"));
-//                            errorTextView.setText("Awesome, check your email to verify your account!");
-
-                            // Set up this new user in our Firebase database.
-//                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                            DatabaseReference myRef = database.getReference();
-//                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                            User newUser = new User(name.getText().toString().trim(), user.getEmail(), user.getUid(), 0, 0);
-//                            myRef.child("users").child(user.getUid()).setValue(newUser);
                         }
                     }
                 });
@@ -198,101 +140,3 @@ public class LoginActivity extends AppCompatActivity {
 
 
 }
-
-//
-//    public void createSignInIntent() {
-//        // [START auth_fui_create_intent]
-//        // Choose authentication providers
-//        List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                new AuthUI.IdpConfig.EmailBuilder().build(),
-//                new AuthUI.IdpConfig.PhoneBuilder().build(),
-//                new AuthUI.IdpConfig.GoogleBuilder().build(),
-//                new AuthUI.IdpConfig.FacebookBuilder().build(),
-//                new AuthUI.IdpConfig.TwitterBuilder().build());
-//
-//        // Create and launch sign-in intent
-//        startActivityForResult(
-//                AuthUI.getInstance()
-//                        .createSignInIntentBuilder()
-//                        .setAvailableProviders(providers)
-//                        .build(),
-//                RC_SIGN_IN);
-//        // [END auth_fui_create_intent]
-//    }
-//
-//    // [START auth_fui_result]
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == RC_SIGN_IN) {
-//            IdpResponse response = IdpResponse.fromResultIntent(data);
-//
-//            if (resultCode == RESULT_OK) {
-//                // Successfully signed in
-//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                // ...
-//            } else {
-//                // Sign in failed. If response is null the user canceled the
-//                // sign-in flow using the back button. Otherwise check
-//                // response.getError().getErrorCode() and handle the error.
-//                // ...
-//            }
-//        }
-//    }
-//    // [END auth_fui_result]
-//
-//    public void signOut() {
-//        // [START auth_fui_signout]
-//        AuthUI.getInstance()
-//                .signOut(this)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        // ...
-//                    }
-//                });
-//        // [END auth_fui_signout]
-//    }
-//
-//    public void delete() {
-//        // [START auth_fui_delete]
-//        AuthUI.getInstance()
-//                .delete(this)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        // ...
-//                    }
-//                });
-//        // [END auth_fui_delete]
-//    }
-//
-//    public void themeAndLogo() {
-//        List<AuthUI.IdpConfig> providers = Collections.emptyList();
-//
-//        // [START auth_fui_theme_logo]
-//        startActivityForResult(
-//                AuthUI.getInstance()
-//                        .createSignInIntentBuilder()
-//                        .setAvailableProviders(providers)
-//                        .setLogo(R.drawable.ic_format_list_bulleted_black_24dp)      // Set logo drawable
-//                        .build(),
-//                RC_SIGN_IN);
-//        // [END auth_fui_theme_logo]
-//    }
-//
-//    public void privacyAndTerms() {
-//        List<AuthUI.IdpConfig> providers = Collections.emptyList();
-//        // [START auth_fui_pp_tos]
-//        startActivityForResult(
-//                AuthUI.getInstance()
-//                        .createSignInIntentBuilder()
-//                        .setAvailableProviders(providers)
-//                        .setTosAndPrivacyPolicyUrls(
-//                                "https://example.com/terms.html",
-//                                "https://example.com/privacy.html")
-//                        .build(),
-//                RC_SIGN_IN);
-//        // [END auth_fui_pp_tos]
-//    }
-//
