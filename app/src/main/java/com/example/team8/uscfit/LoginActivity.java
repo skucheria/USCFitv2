@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                createAccount(email.getText().toString(), pass.getText().toString());
+                signIn(email.getText().toString(), pass.getText().toString());
 
 //                signIn(email.getText().toString(), pass.getText().toString());
             }
@@ -115,6 +115,17 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            System.out.println("LOGIN SUCESSFUL");
+                            System.out.println("LOGIN SUCESSFUL");
+                            System.out.println("LOGIN SUCESSFUL");
+                            System.out.println("LOGIN SUCESSFUL");
+                            System.out.println("LOGIN SUCESSFUL");
+                            System.out.println("LOGIN SUCESSFUL");
+                            System.out.println("LOGIN SUCESSFUL");
+
+
+                            sendMessage();
+
                             if(user.isEmailVerified()) {
                                 // If the user pressed back to get back to login, we want to clear singleton data.
 //                                RelevantUserSingleton.getInstance(this).clear();
