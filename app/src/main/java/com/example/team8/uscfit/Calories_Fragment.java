@@ -54,11 +54,10 @@ public class Calories_Fragment extends Fragment {
                 bmiToPrint = BMICalculator(heightDouble, weightDouble);
                 String bmiToPrintString = Double.toString(bmiToPrint);
                 double valueFromHash = activityToCaloriesBurned.get(spinnerInput);
-                calorieToPrint = valueFromHash * timeCompleteDouble;
+                calorieToPrint = calculateCalories(valueFromHash,timeCompleteDouble);
                 String calorieToPrintString = Double.toString(calorieToPrint);
                 tv = getView().findViewById(R.id.textView2);
-                tv.setText("BMI: " + bmiToPrintString + "\n" + "Calories Burned: "
-                        + calorieToPrintString);
+                tv.setText(setUpString(bmiToPrintString, calorieToPrintString));
             }
         });
         return view;
@@ -69,8 +68,15 @@ public class Calories_Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
+    public double calculateCalories(double valueFromHash, double timeCompleteDouble) {
+        return valueFromHash * timeCompleteDouble;
+    }
 
+    public String setUpString(String bmiToPrintString, String calorieToPrintString) {
+        return "BMI: " + bmiToPrintString + "\n" + "Calories Burned: "
+                + calorieToPrintString;
     }
 
 
@@ -79,7 +85,7 @@ public class Calories_Fragment extends Fragment {
         return initialCalc/personHeight;
     }
 
-    private void populateHashMap() {
+    public void populateHashMap() {
         for (int i = 0; i < 6; i++) {
             activityToCaloriesBurned.put(physicalActivities[i], metValues[i]);
         }
