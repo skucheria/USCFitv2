@@ -74,7 +74,7 @@ public class Calories_Fragment extends Fragment {
     }
 
 
-    private double BMICalculator(double personHeight, double personWeight) {
+    public double BMICalculator(double personHeight, double personWeight) {
         double initialCalc = personWeight/personHeight;
         return initialCalc/personHeight;
     }
