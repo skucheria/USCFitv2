@@ -85,8 +85,16 @@ public class Todo_Fragment extends Fragment {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
+                                String month = "";
+                                String day = "";
+
+                                monthOfYear++;
+
+                                if (monthOfYear < 10) { month = "0" + monthOfYear; }
+                                if (dayOfMonth < 10){ day = "0" + dayOfMonth; }
+//                                txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                txtDate.setText(year + "-" + month + "-" + day);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
