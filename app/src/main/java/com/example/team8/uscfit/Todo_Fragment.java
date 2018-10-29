@@ -1,24 +1,29 @@
 package com.example.team8.uscfit;
 
-import android.support.v4.app.Fragment;
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import java.util.ArrayList;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.support.annotation.Nullable;
-import android.widget.Button;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.view.*;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TimePicker;
+
+import com.example.team8.uscfit.objects.TodoItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -27,6 +32,10 @@ public class Todo_Fragment extends Fragment {
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
+
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid = user.getUid();
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
     Button btnDatePicker, btnTimePicker;
     EditText txtDate, txtTime;
@@ -120,7 +129,14 @@ public class Todo_Fragment extends Fragment {
                 EditText etInTime = getView().findViewById(R.id.in_time);
                 String timeText = etInTime.getText().toString();
                 String allText = itemText + " REMINDER AT: " + dateText + " " + timeText;
+
+                TodoItem tdi = new TodoItem(uid, itemText, dateText, timeText);
+
                 if(!itemText.equals("")) { //add if not empty
+
+                    DatabaseReference newRef = mRootRef.child("todoitems").push();
+                    newRef.setValue(tdi);
+
                     itemsAdapter.add(allText);
                     etNewItem.setText("");
                     txtDate.getText().clear();

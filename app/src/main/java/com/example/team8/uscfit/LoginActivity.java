@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-
         email = findViewById(R.id.editText);
         pass = findViewById(R.id.editText2);
 
