@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
-public class PedometerUnitTest extends StepFilter {
+public class StepFilterUnitTest extends StepFilter {
     @Test
     public void sum_isCorrect() {
         float[] arr = new float[3];
