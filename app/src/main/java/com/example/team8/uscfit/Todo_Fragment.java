@@ -26,8 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-
-
 public class Todo_Fragment extends Fragment {
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
@@ -46,13 +44,6 @@ public class Todo_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         items = ((MainActivity) getActivity()).sendToDo();
-
-//        if(savedInstanceState != null){
-//            numSteps = savedInstanceState.getInt("steps", 0);
-//        }
-//        else{
-//            System.out.println("THE STATE FOR STEPS COUNTER FRAGMENT WAS NULL");
-//        }
     }
 
 
@@ -84,17 +75,14 @@ public class Todo_Fragment extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-
-
-                                String month = "";
-                                String day = "";
-
                                 monthOfYear++;
-
-                                if (monthOfYear < 10) { month = "0" + monthOfYear; }
-                                if (dayOfMonth < 10){ day = "0" + dayOfMonth; }
+                                String month = String.valueOf(monthOfYear);
+                                String day = String.valueOf(dayOfMonth);
+                                if (monthOfYear < 10) { month = "0" + month; }
+                                if (dayOfMonth < 10){ day = "0" + day; }
 //                                txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                txtDate.setText(year + "-" + month + "-" + day);
+                                String fullDate = String.valueOf(year) + "-" + month + "-" + day;
+                                txtDate.setText(fullDate);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -115,8 +103,11 @@ public class Todo_Fragment extends Fragment {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-
-                                txtTime.setText(hourOfDay + ":" + minute);
+                                String hour = String.valueOf(hourOfDay);
+                                String min = String.valueOf(minute);
+                                if (hourOfDay < 10) { hour = "0" + hour; }
+                                if (minute < 10) { min = "0" + min; }
+                                txtTime.setText(hour + ":" + min);
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
@@ -138,7 +129,7 @@ public class Todo_Fragment extends Fragment {
                 String timeText = etInTime.getText().toString();
                 String allText = itemText + " REMINDER AT: " + dateText + " " + timeText;
 
-                TodoItem tdi = new TodoItem(uid, itemText, dateText, timeText);
+                TodoItem tdi = new TodoItem(uid, itemText, dateText + " " + timeText);
 
                 if(!itemText.equals("")) { //add if not empty
 
