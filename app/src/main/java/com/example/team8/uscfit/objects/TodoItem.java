@@ -6,6 +6,13 @@ public class TodoItem {
     private String endDate;
     private String endTime;
 
+    public TodoItem() {
+        this.uid = "";
+        this.desc = "";
+        this.endDate = "";
+        this.endTime = "";
+    };
+
     public TodoItem(String uid, String desc, String endDate, String endTime) {
         this.uid = uid;
         this.desc = desc;
@@ -19,7 +26,7 @@ public class TodoItem {
     public String getEndTime() { return endTime; }
 
     public void setUid(String uid) { this.uid = uid; }
-    public void setStartDate(String desc) { this.desc = desc; }
+    public void setDesc(String desc) { this.desc = desc; }
     public void setEndDate(String endDate) { this.endDate = endDate; }
     public void setEndTime(String endTime) { this.endTime = endTime; }
 }
