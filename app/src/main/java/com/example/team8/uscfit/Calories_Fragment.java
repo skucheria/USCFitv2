@@ -36,6 +36,7 @@ public class Calories_Fragment extends Fragment {
     public double calorieToPrint;
     TextView tv;
 
+
 //    @Override
 //    public void onCreate(Bundle savedInstanceState){
 //        super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class Calories_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         populateHashMap();
-        View view = inflater.inflate(R.layout.calorie_layout, container, false);
+        final View view = inflater.inflate(R.layout.calorie_layout, container, false);
         Button button = view.findViewById(R.id.button);
 
         button.setOnClickListener(new OnClickListener() {
@@ -87,7 +88,7 @@ public class Calories_Fragment extends Fragment {
                         User user = dataSnapshot.getValue(User.class);
                         float bmi = user.getBmi();
                         float cals = user.getCalories();
-                        tv = getView().findViewById(R.id.textView2);
+                        tv = view.findViewById(R.id.textView2);
                         tv.setText(setUpString(Float.toString(bmi), Float.toString(cals)));
                     }
                     @Override
