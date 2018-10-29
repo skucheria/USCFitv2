@@ -14,14 +14,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.team8.uscfit.objects.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -79,23 +74,23 @@ public class Calories_Fragment extends Fragment {
         });
 
 
-        Query q = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        q.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // for example: if you'res expecting your user's data as an object of the "User" class.
-                        User user = dataSnapshot.getValue(User.class);
-                        float bmi = user.getBmi();
-                        float cals = user.getCalories();
-                        tv = view.findViewById(R.id.textView2);
-                        tv.setText(setUpString(Float.toString(bmi), Float.toString(cals)));
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // read query is cancelled.
-                    }
-                });
+//        Query q = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        q.addValueEventListener(
+//                new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        // for example: if you'res expecting your user's data as an object of the "User" class.
+//                        User user = dataSnapshot.getValue(User.class);
+//                        float bmi = user.getBmi();
+//                        float cals = user.getCalories();
+//                        tv = view.findViewById(R.id.textView2);
+//                        tv.setText(setUpString(Float.toString(bmi), Float.toString(cals)));
+//                    }
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        // read query is cancelled.
+//                    }
+//                });
         return view;
     }
 

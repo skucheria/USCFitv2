@@ -111,11 +111,15 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(!task.isSuccessful()) {
-                            System.out.println("LOGIN IS NOT SUCESSFUL");
+                            Toast.makeText(LoginActivity.this, "Login Was Not Successful", Toast.LENGTH_LONG).show();
+
 
                         }
                         else {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+
 
                             sendMessage();
 
@@ -148,11 +152,11 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(LoginActivity.this, "Registratino SUCCESS with fields", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(LoginActivity.this, "Registration Successul!", Toast.LENGTH_LONG).show();
                                         sendMessage();
                                     }
                                     else{
-                                        Toast.makeText(LoginActivity.this, "Registratino FAILED with fields", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(LoginActivity.this, "Registration Failed!", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
