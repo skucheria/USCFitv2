@@ -19,6 +19,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Random;
+
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -38,7 +40,9 @@ public class LoginActivityInstrumentedTest {
     @Test
     // signup
     public void signupActivityTest() {
-        onView(withId(R.id.editText)).perform(typeText("test-signup@gmail.com"));
+        Random r = new Random();
+        int signupInt = r.nextInt(100000);
+        onView(withId(R.id.editText)).perform(typeText("test-signup" + Integer.toString(signupInt) + "@gmail.com"));
         onView(withId(R.id.editText2)).perform(typeText("password"));
         Espresso.pressBack();
         onView(withId(R.id.button3)).perform(click());
@@ -204,16 +208,20 @@ public class LoginActivityInstrumentedTest {
     @Test
     // signup, fill out form, go to calories,submit form, go back, add item
     public void signupAddGotoCaloriesSubmitTest() {
-        onView(withId(R.id.editText)).perform(typeText("test-signup1@gmail.com"));
+        Random r = new Random();
+        int signupInt = r.nextInt(100000);
+        onView(withId(R.id.editText)).perform(typeText("test-signup" + Integer.toString(signupInt) + "@gmail.com"));
         onView(withId(R.id.editText2)).perform(typeText("password"));
         Espresso.pressBack();
         onView(withId(R.id.button3)).perform(click());
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        onView(withId(R.id.nav_steps)).perform(click());
         onView(withId(R.id.nav_todo)).perform(click());
         onView(withId(R.id.etNewItem)).perform(replaceText("Lift weights"));
 
@@ -227,6 +235,7 @@ public class LoginActivityInstrumentedTest {
         onView(withId(R.id.nav_calories)).perform(click());
 
         onView(withId(R.id.heightMeters)).perform(typeText("1"));
+        Espresso.pressBack();
         onView(withId(R.id.weightKilograms)).perform(typeText("150"));
         onView(withId(R.id.genderID)).perform(typeText("Female"));
         Espresso.pressBack();
@@ -241,6 +250,7 @@ public class LoginActivityInstrumentedTest {
         //submit
         onView(withId(R.id.btnAddItem)).perform(click());
     }
+
 
     @Test
     // login, add 2 items, removeFirst
