@@ -1,32 +1,39 @@
 package com.example.team8.uscfit;
 
-import android.support.v4.app.Fragment;
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import java.util.ArrayList;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.support.annotation.Nullable;
-import android.widget.Button;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.view.*;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TimePicker;
+
+import com.example.team8.uscfit.objects.TodoItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.Calendar;
-
-
 
 public class Todo_Fragment extends Fragment {
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
+
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid = user.getUid();
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
     Button btnDatePicker, btnTimePicker;
     EditText txtDate, txtTime;
@@ -37,13 +44,6 @@ public class Todo_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         items = ((MainActivity) getActivity()).sendToDo();
-
-//        if(savedInstanceState != null){
-//            numSteps = savedInstanceState.getInt("steps", 0);
-//        }
-//        else{
-//            System.out.println("THE STATE FOR STEPS COUNTER FRAGMENT WAS NULL");
-//        }
     }
 
 
@@ -75,9 +75,14 @@ public class Todo_Fragment extends Fragment {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-
-                                txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
+                                monthOfYear++;
+                                String month = String.valueOf(monthOfYear);
+                                String day = String.valueOf(dayOfMonth);
+                                if (monthOfYear < 10) { month = "0" + month; }
+                                if (dayOfMonth < 10){ day = "0" + day; }
+//                                txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                String fullDate = String.valueOf(year) + "-" + month + "-" + day;
+                                txtDate.setText(fullDate);
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -98,8 +103,11 @@ public class Todo_Fragment extends Fragment {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay,
                                                   int minute) {
-
-                                txtTime.setText(hourOfDay + ":" + minute);
+                                String hour = String.valueOf(hourOfDay);
+                                String min = String.valueOf(minute);
+                                if (hourOfDay < 10) { hour = "0" + hour; }
+                                if (minute < 10) { min = "0" + min; }
+                                txtTime.setText(hour + ":" + min);
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
@@ -120,7 +128,14 @@ public class Todo_Fragment extends Fragment {
                 EditText etInTime = getView().findViewById(R.id.in_time);
                 String timeText = etInTime.getText().toString();
                 String allText = itemText + " REMINDER AT: " + dateText + " " + timeText;
+
+                TodoItem tdi = new TodoItem(uid, itemText, dateText + " " + timeText);
+
                 if(!itemText.equals("")) { //add if not empty
+
+                    DatabaseReference newRef = mRootRef.child("todoitems").push();
+                    newRef.setValue(tdi);
+
                     itemsAdapter.add(allText);
                     etNewItem.setText("");
                     txtDate.getText().clear();

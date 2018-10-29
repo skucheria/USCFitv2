@@ -15,6 +15,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.*;
 import android.view.*;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 //import com.google.firebase.FirebaseException;
 //import com.google.firebase.auth.ActionCodeSettings;
@@ -57,7 +60,6 @@ public class MainActivity extends AppCompatActivity{
     private FragmentTransaction ft;
     private Bundle b2;
     private Intent myIntent;
-
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

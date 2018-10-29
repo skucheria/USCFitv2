@@ -1,20 +1,27 @@
 package com.example.team8.uscfit;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.content.Context;
 import android.support.v4.app.Fragment;
-
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
 
+import com.example.team8.uscfit.objects.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -28,6 +35,30 @@ public class Calories_Fragment extends Fragment {
     public double bmiToPrint;
     public double calorieToPrint;
     TextView tv;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        Query q = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        q.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // for example: if you'res expecting your user's data as an object of the "User" class.
+                        User user = dataSnapshot.getValue(User.class);
+                        float bmi = user.getBmi();
+                        float cals = user.getCalories();
+                        tv = getView().findViewById(R.id.textView2);
+                        tv.setText(setUpString(Float.toString(bmi), Float.toString(cals)));
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // read query is cancelled.
+                    }
+                });
+
+    }
 
 
     @Override
@@ -58,6 +89,7 @@ public class Calories_Fragment extends Fragment {
                 String calorieToPrintString = Double.toString(calorieToPrint);
                 tv = getView().findViewById(R.id.textView2);
                 tv.setText(setUpString(bmiToPrintString, calorieToPrintString));
+
             }
         });
         return view;
@@ -75,8 +107,16 @@ public class Calories_Fragment extends Fragment {
     }
 
     public String setUpString(String bmiToPrintString, String calorieToPrintString) {
+
+        System.out.println("CALORIES BURNED: " + calorieToPrintString);
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mDatabase.child("bmi").setValue(Float.parseFloat(bmiToPrintString));
+        mDatabase.child("calories").setValue(Float.parseFloat(calorieToPrintString));
+
         return "BMI: " + bmiToPrintString + "\n" + "Calories Burned: "
                 + calorieToPrintString;
+
     }
 
 
@@ -90,6 +130,8 @@ public class Calories_Fragment extends Fragment {
             activityToCaloriesBurned.put(physicalActivities[i], metValues[i]);
         }
     }
+
+
 
 
     @Override

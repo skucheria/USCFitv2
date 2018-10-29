@@ -3,21 +3,18 @@ import java.util.Calendar;
 
 
 public class User{
-
-
-    public User(){
-        this.steps = 0;
-        this.caloriesBurned = 0.0;
-    }
     //member variables
     private String name;
     private int weight;
     private int height;
     private int gender;
-    private double bmi;
-    private double caloriesBurned;
+    private float bmi;
+    private float calories;
     private Calendar calendar;
     private int steps;
+
+
+
 
 
     public int getSteps(){
@@ -64,17 +61,17 @@ public class User{
         this.gender = gender;
     }
 
-    public double getBmi() {
+    public float getBmi() {
         return bmi;
     }
 
-    public void setBmi(double bmi) {
+    public void setBmi(float bmi) {
         this.bmi = bmi;
     }
 
-    public void setCaloriesBurned(double caloriesBurned) {this.caloriesBurned = caloriesBurned;}
+    public void setCalories(float calories) {this.calories = calories;}
 
-    public double getCaloriesBurned() {return caloriesBurned;}
+    public float getCalories() {return calories;}
 
     public Calendar getCalendar() {
         return calendar;
