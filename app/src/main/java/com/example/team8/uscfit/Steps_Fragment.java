@@ -40,9 +40,8 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
 //        this.numSteps = ((MainActivity) getActivity()).sendSteps();
 
 
-        Query q = FirebaseDatabase.getInstance().getReference().child("users").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Query q = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        System.out.println("User ID: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         q.addValueEventListener(
                 new ValueEventListener() {
@@ -51,7 +50,9 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
                         // for example: if you'res expecting your user's data as an object of the "User" class.
                         User user = dataSnapshot.getValue(User.class);
                         System.out.println("USER IS NULL? " + user);
-//                        numSteps = user.getSteps();
+                        System.out.println("STEPS FROM DATABASE:" + user.getSteps());
+                        numSteps = user.getSteps();
+                        TvStep.setText(TEXT_NUM_STEPS + numSteps); 
                     }
 
                     @Override
