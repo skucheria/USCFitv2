@@ -11,8 +11,7 @@ public class TodoItemUnitTest extends TodoItem {
 
     String uid = "lkajlkjsdfjlkdjf";
     String desc = "Basketball Practice";
-    String endDate = "10-02-2018";
-    String endTime = "22:55";
+    String date = "10-02-2018";
 
     TodoItem ti = new TodoItem();
 
@@ -29,14 +28,9 @@ public class TodoItemUnitTest extends TodoItem {
     }
 
     @Test
-    public void getEndDate_isCorrect() {
-        ti.setEndDate(endDate);
-        assertEquals("10-02-2018", ti.getEndDate());
+    public void getDate_isCorrect() {
+        ti.setDateTime(date);
+        assertEquals("10-02-2018", ti.getDateTime());
     }
 
-    @Test
-    public void getEndTime_isCorrect() {
-        ti.setEndTime(endTime);
-        assertEquals("22:55", ti.getEndTime());
-    }
 }
