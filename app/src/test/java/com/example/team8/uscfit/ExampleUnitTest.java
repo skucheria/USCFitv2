@@ -45,4 +45,13 @@ public class ExampleUnitTest extends Calories_Fragment{
         testFragment.populateHashMap();
         assertEquals(8, testFragment.activityToCaloriesBurned.get("Basketball"), 0.1);
     }
+
+    @Test
+    public void setUpString_isCorrect() {
+        String bmiToPrintString = "20";
+        String caloriesToPrintString = "32";
+        assertEquals("BMI: " + bmiToPrintString + "\n" + "Calories Burned: " +
+                caloriesToPrintString, "BMI: " + "20" + "\n" + "Calories Burned: " +
+                "32");
+    }
 }
