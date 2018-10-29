@@ -1,33 +1,28 @@
 package com.example.team8.uscfit;
 
-import android.media.tv.TvInputService;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
-
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.widget.TextView;
-import android.hardware.*;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.widget.*;
-import android.view.*;
 
-import android.content.DialogInterface.OnClickListener;
-import com.example.team8.uscfit.pedometer.*;
+import com.example.team8.uscfit.objects.User;
+import com.example.team8.uscfit.pedometer.StepDetector;
+import com.example.team8.uscfit.pedometer.StepListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Steps_Fragment extends Fragment implements SensorEventListener, StepListener{
@@ -42,13 +37,29 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        this.numSteps = ((MainActivity) getActivity()).sendSteps();
-//        if(savedInstanceState != null){
-//            numSteps = savedInstanceState.getInt("steps", 0);
-//        }
-//        else{
-//            System.out.println("THE STATE FOR STEPS COUNTER FRAGMENT WAS NULL");
-//        }
+//        this.numSteps = ((MainActivity) getActivity()).sendSteps();
+
+
+        Query q = FirebaseDatabase.getInstance().getReference().child("users").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        System.out.println("User ID: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        q.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // for example: if you'res expecting your user's data as an object of the "User" class.
+                        User user = dataSnapshot.getValue(User.class);
+                        System.out.println("USER IS NULL? " + user);
+//                        numSteps = user.getSteps();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // read query is cancelled.
+                    }
+                });
+
     }
 
 
@@ -84,10 +95,12 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
     public void step(long timeNs) {
         numSteps++;
         TvStep.setText(TEXT_NUM_STEPS + numSteps);
-//        Bundle b = new Bundle();
-//        b.putInt("steps", numSteps);
-//        this.setArguments(b);
-//        this.getFragmentManager().beginTransaction().replace(R.id.fragment_container, this).commit();
+
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mDatabase.child("steps").setValue(numSteps);
+
+
+
 
         ((MainActivity) getActivity()).updateSteps(numSteps);
 

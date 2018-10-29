@@ -1,9 +1,14 @@
 package com.example.team8.uscfit.objects;
-import java.util.*;
-import java.io.*;
+import java.util.Calendar;
 
 
 public class User{
+
+
+    public User(){
+        this.steps = 0;
+        this.caloriesBurned = 0.0;
+    }
     //member variables
     private String name;
     private int weight;
@@ -12,6 +17,18 @@ public class User{
     private double bmi;
     private double caloriesBurned;
     private Calendar calendar;
+    private int steps;
+
+
+    public int getSteps(){
+        return this.steps;
+    }
+
+    public void setSteps(int step){
+        this.steps = step;
+
+    }
+
 //    private ArrayList<Goal> goals;
 
     //Getters and setters

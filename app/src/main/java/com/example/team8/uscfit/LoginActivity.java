@@ -1,54 +1,22 @@
 package com.example.team8.uscfit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.TextView;
-import android.hardware.*;
-import android.app.Activity;
-import android.content.Intent;
-import android.widget.*;
-import android.view.*;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.ActionCodeSettings;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FacebookAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthSettings;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GithubAuthProvider;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.auth.PlayGamesAuthProvider;
-import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.auth.UserProfileChangeRequest;
-
-import android.content.DialogInterface.OnClickListener;
-import com.example.team8.uscfit.pedometer.*;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
+import com.example.team8.uscfit.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -58,6 +26,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText pass;
     private Intent i;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mDatabase;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +37,22 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+//        mAuth.addAuthStateListener(mAuthListener);
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // user is signed in
+                    System.out.println("User is already signed in");
+                    sendMessage();
+                }
+                else {
+                    // user signed out
+                    System.out.println("User is not signed in");
+                }
+            }
+        };
 
 
         email = findViewById(R.id.editText);
@@ -85,6 +73,28 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+//    @Override
+//    // Code from Firebase tutorial for how to set up Authentication
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        mAuth = FirebaseAuth.getInstance();
+//        mAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                if (user != null) {
+//                    // user is signed in
+//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+//                }
+//                else {
+//                    // user signed out
+//                    Log.d(TAG, "onAuthStateChanged:signed_out");
+//                }
+//            }
+//        };
+//
+//    }
 
 
     public void sendMessage() {
@@ -128,13 +138,34 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                             System.out.println("Created user sucessfully");
-                            sendMessage();
+
+                            User newUser = new User();
+
+//                            mDatabase =
+
+                            FirebaseDatabase.getInstance().getReference("users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(LoginActivity.this, "Registratino SUCCESS with fields", Toast.LENGTH_LONG).show();
+                                        sendMessage();
+                                    }
+                                    else{
+                                        Toast.makeText(LoginActivity.this, "Registratino FAILED with fields", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+
 
                         }
                     }
                 });
 
     }
+
+
 
 
 
