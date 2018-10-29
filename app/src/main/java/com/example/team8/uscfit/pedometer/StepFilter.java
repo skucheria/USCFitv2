@@ -2,7 +2,7 @@ package com.example.team8.uscfit.pedometer;
 
 public class StepFilter {
 
-    private StepFilter() {
+    public StepFilter() {
     }
 
     public static float sum(float[] array) {
