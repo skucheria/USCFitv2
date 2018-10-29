@@ -52,7 +52,7 @@ public class Steps_Fragment extends Fragment implements SensorEventListener, Ste
                         System.out.println("USER IS NULL? " + user);
                         System.out.println("STEPS FROM DATABASE:" + user.getSteps());
                         numSteps = user.getSteps();
-                        TvStep.setText(TEXT_NUM_STEPS + numSteps); 
+                        TvStep.setText(TEXT_NUM_STEPS + numSteps);
                     }
 
                     @Override
