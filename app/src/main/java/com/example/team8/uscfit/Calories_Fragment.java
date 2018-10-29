@@ -36,29 +36,12 @@ public class Calories_Fragment extends Fragment {
     public double calorieToPrint;
     TextView tv;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-        Query q = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        q.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // for example: if you'res expecting your user's data as an object of the "User" class.
-                        User user = dataSnapshot.getValue(User.class);
-                        float bmi = user.getBmi();
-                        float cals = user.getCalories();
-                        tv = getView().findViewById(R.id.textView2);
-                        tv.setText(setUpString(Float.toString(bmi), Float.toString(cals)));
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // read query is cancelled.
-                    }
-                });
-
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState){
+//        super.onCreate(savedInstanceState);
+//
+//
+//    }
 
 
     @Override
@@ -68,6 +51,7 @@ public class Calories_Fragment extends Fragment {
         populateHashMap();
         View view = inflater.inflate(R.layout.calorie_layout, container, false);
         Button button = view.findViewById(R.id.button);
+
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +76,25 @@ public class Calories_Fragment extends Fragment {
 
             }
         });
+
+
+        Query q = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        q.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // for example: if you'res expecting your user's data as an object of the "User" class.
+                        User user = dataSnapshot.getValue(User.class);
+                        float bmi = user.getBmi();
+                        float cals = user.getCalories();
+                        tv = getView().findViewById(R.id.textView2);
+                        tv.setText(setUpString(Float.toString(bmi), Float.toString(cals)));
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // read query is cancelled.
+                    }
+                });
         return view;
     }
 
