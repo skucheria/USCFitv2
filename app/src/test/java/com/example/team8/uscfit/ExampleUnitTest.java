@@ -42,8 +42,7 @@ public class ExampleUnitTest extends Calories_Fragment{
 
     @Test
     public void populateHashMap_isCorrect() {
-        HashMap<String, Integer> activityToCaloriesBurned = new HashMap<String, Integer>();
         testFragment.populateHashMap();
-        assertEquals(activityToCaloriesBurned.get(0), 8, 0.1);
+        assertEquals(8, testFragment.activityToCaloriesBurned.get("Basketball"), 0.1);
     }
 }
