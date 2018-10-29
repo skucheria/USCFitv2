@@ -103,7 +103,7 @@ public class LoginActivityInstrumentedTest {
 
     @Test
     // login, fill out form, go to steps, add item
-    public void todoAddGotoStepsRemoveTest() {
+    public void todoAddGotoStepsTest() {
         onView(withId(R.id.editText)).perform(typeText("email@gmail.com"));
         onView(withId(R.id.editText2)).perform(typeText("password"));
         Espresso.pressBack();
