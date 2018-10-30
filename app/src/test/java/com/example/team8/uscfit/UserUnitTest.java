@@ -33,4 +33,10 @@ public class UserUnitTest extends User {
         u.setHeight(40);
         assertEquals(u.getHeight(), 40);
     }
+
+    @Test
+    public void getCalories_isCorrect() {
+        u.setCalories(100);
+        assertEquals(u.getCalories(), 100, 0.1);
+    }
 }

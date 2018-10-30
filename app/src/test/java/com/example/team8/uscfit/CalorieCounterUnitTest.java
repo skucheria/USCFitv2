@@ -5,16 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CalorieCounterUnitTest extends Calories_Fragment{
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
-
-    @Test
-    public void subtraction_isCorrect() {
-        assertEquals(0, 2-2);
-    }
-
     private Calories_Fragment testFragment = new Calories_Fragment();
 
     @Test
