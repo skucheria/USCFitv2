@@ -6,6 +6,7 @@
     <string name="todo">To-Do</string>
     <string name="calories">Calories Burned</string>
     <string name="steps">Steps</string>
+    <string name="settings">Settings</string>
 
     <string-array name="possibleActivities">
         <item>Basketball</item>

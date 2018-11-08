@@ -1,23 +1,17 @@
 package com.example.team8.uscfit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.hardware.*;
-import android.app.Activity;
-import android.content.Intent;
-import android.widget.*;
-import android.view.*;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 
 //import com.google.firebase.FirebaseException;
 //import com.google.firebase.auth.ActionCodeSettings;
@@ -36,11 +30,6 @@ import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.SignInMethodQueryResult;
 //import com.google.firebase.auth.UserInfo;
 //import com.google.firebase.auth.UserProfileChangeRequest;
-
-import android.content.DialogInterface.OnClickListener;
-import com.example.team8.uscfit.pedometer.*;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -101,6 +90,13 @@ public class MainActivity extends AppCompatActivity{
                 else if(menuItem.getItemId() == R.id.nav_todo) {
                     ft = fm.beginTransaction();
                     f = new Todo_Fragment();
+                    ft.replace(R.id.fragment_container, f);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+                else if(menuItem.getItemId() == R.id.nav_settings) {
+                    ft = fm.beginTransaction();
+                    f = new Settings_Fragment();
                     ft.replace(R.id.fragment_container, f);
                     ft.addToBackStack(null);
                     ft.commit();
