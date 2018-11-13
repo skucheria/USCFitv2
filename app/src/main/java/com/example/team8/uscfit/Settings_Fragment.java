@@ -70,7 +70,12 @@ public class Settings_Fragment extends Fragment {
             public void onClick(View v) {
                 EditText genderText = getView().findViewById(R.id.genderText);
                 String gender = genderText.getText().toString();
+                int g = 0;
+                if (gender.equalsIgnoreCase("male")) g = 1;
                 // save gender to DB...I guess
+                FirebaseDatabase.getInstance().getReference("users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("gender").setValue(g);
             }
         });
 
