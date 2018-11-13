@@ -1,5 +1,6 @@
 package com.example.team8.uscfit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class Settings_Fragment extends Fragment {
 
     Button btnWeight, btnHeight, btnGender;
     EditText txtWeight, txtHeight, txtGender;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -70,6 +72,10 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // logout and bring user back to login page
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), LoginActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 

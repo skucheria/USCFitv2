@@ -29,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
