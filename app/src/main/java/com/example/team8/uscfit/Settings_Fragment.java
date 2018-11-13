@@ -47,6 +47,9 @@ public class Settings_Fragment extends Fragment {
                 EditText weightText = getView().findViewById(R.id.weightText);
                 String weight = weightText.getText().toString();
                 // save weight to DB
+                FirebaseDatabase.getInstance().getReference("users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("weight").setValue(Integer.parseInt(weight));
             }
         });
 
@@ -56,6 +59,9 @@ public class Settings_Fragment extends Fragment {
                 EditText heightText = getView().findViewById(R.id.heightText);
                 String height = heightText.getText().toString();
                 // save height to DB
+                FirebaseDatabase.getInstance().getReference("users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("height").setValue(Integer.parseInt(height));
             }
         });
         // we don't really even use this for anything so...

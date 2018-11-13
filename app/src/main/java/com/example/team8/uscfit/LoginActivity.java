@@ -44,8 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     // user is signed in
                     System.out.println("User is already signed in");
                     sendMessage();
-                }
-                else {
+                } else {
                     // user signed out
                     System.out.println("User is not signed in");
                 }
@@ -71,34 +70,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    // Code from Firebase tutorial for how to set up Authentication
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        mAuth = FirebaseAuth.getInstance();
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//                if (user != null) {
-//                    // user is signed in
-//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-//                }
-//                else {
-//                    // user signed out
-//                    Log.d(TAG, "onAuthStateChanged:signed_out");
-//                }
-//            }
-//        };
-//
-//    }
-
 
     public void sendMessage() {
         i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
-
 
 
     // Sign in method, adapted from Firebase tutorial.
@@ -130,10 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     public void onComplete(@NonNull Task<AuthResult> task) {
-//                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                        // if sign in fails, display message.
-                        // if sign in succeeds, state listener is notified and logic to handle signed in user is handled in listener
                         if(!task.isSuccessful()) {
                             System.out.println("Created account NOT succesful");
                         }
@@ -141,8 +114,6 @@ public class LoginActivity extends AppCompatActivity {
                             System.out.println("Created user sucessfully");
 
                             User newUser = new User();
-
-//                            mDatabase =
 
                             FirebaseDatabase.getInstance().getReference("users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
