@@ -34,6 +34,7 @@ public class Todo_Fragment extends Fragment {
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
+    private ArrayList<TodoItem> initialItems = new ArrayList<TodoItem>();
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String uid = user.getUid();
@@ -42,13 +43,14 @@ public class Todo_Fragment extends Fragment {
     Button btnDatePicker, btnTimePicker;
     EditText txtDate, txtTime;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private ArrayList<TodoItem> l;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        // query for current user's todo items
-        Query q = mRootRef.child("todoitems").equalTo("uid", uid).orderByChild("datetime");
+
+
 
         items = ((MainActivity) getActivity()).sendToDo();
     }
@@ -163,44 +165,41 @@ public class Todo_Fragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         lvItems = getView().findViewById(R.id.lvItems);
 
+        l =  new ArrayList<TodoItem>();
+        initialItems = setupList();
+
+//        System.out.println("initial items size: " + initialItems.size());
 
 
-       Query listQ= mRootRef.child("todoitems");
-
-
-//       .orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid())
-
-       final ArrayList<TodoItem> initialItems = new ArrayList<TodoItem>();
-
-       listQ.addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
-
-               for(DataSnapshot snap : dataSnapshot.getChildren()){
-                   TodoItem item = snap.getValue(TodoItem.class);
-                   System.out.println("Userid for item: " + item.getUid());
-                   if(item.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                       initialItems.add(item);
-                   }
-               }
-           }
-
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
-
-           }
-       });
-
-
-
-
-//       items = new ArrayList<>();
         itemsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-//        items.add("First Activity");
-//        items.add("Second Activity");
+
+
         setupListViewListener();
 
+    }
+
+    private ArrayList<TodoItem> setupList(){
+        Query listQ= mRootRef.child("todoitems").orderByChild("uid").equalTo(uid);
+        listQ.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snap : dataSnapshot.getChildren()){
+                    TodoItem item = snap.getValue(TodoItem.class);
+                    l.add(item);
+                    String allText = item.getDesc() + " REMINDER AT: " + item.getDateTime();
+                    itemsAdapter.add(allText);
+                    System.out.println("L size: " + l.size());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return l;
     }
 
     // Attaches a long click listener to the listview
