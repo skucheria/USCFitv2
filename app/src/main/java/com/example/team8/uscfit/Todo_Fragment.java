@@ -152,12 +152,6 @@ public class Todo_Fragment extends Fragment {
             }
         });
 
-//        ArrayList<String> newList = new ArrayList<String>();
-//        for(int i=0 ; i<itemsAdapter.getCount() ; i++){
-//            newList.add(itemsAdapter.getItem(i));
-//        }
-//
-//        ((MainActivity) getActivity()).updateToDo(newList);
         return view;
     }
 
@@ -184,6 +178,7 @@ public class Todo_Fragment extends Fragment {
         listQ.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                itemsAdapter.clear();
                 for(DataSnapshot snap : dataSnapshot.getChildren()){
                     TodoItem item = snap.getValue(TodoItem.class);
                     l.add(item);
