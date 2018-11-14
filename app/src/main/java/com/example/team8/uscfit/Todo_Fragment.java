@@ -160,6 +160,19 @@ public class Todo_Fragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         lvItems = getView().findViewById(R.id.lvItems);
 
+       DatabaseReference uInfo = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+       DatabaseReference listInfo = FirebaseDatabase.getInstance().getReference("todoitems");
+
+
+       listInfo.orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+       System.out.println("List info object null? : " + listInfo);
+
+
+
+
 //       items = new ArrayList<>();
         itemsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
