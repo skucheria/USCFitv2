@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import android.app.AlertDialog;
 import com.example.team8.uscfit.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -79,62 +79,66 @@ public class LoginActivity extends AppCompatActivity {
 
     // Sign in method, adapted from Firebase tutorial.
     private void signIn(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        if(email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Log In Not Successful. Enter valid email/password.", Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if(!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Login Was Not Successful", Toast.LENGTH_LONG).show();
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Login Was Not Successful", Toast.LENGTH_LONG).show();
 
 
+                            } else {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+
+
+                                sendMessage();
+
+                            }
                         }
-                        else {
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-
-
-                            sendMessage();
-
-                        }
-                    }
-                });
+                    });
+        }
     }
 
     private void createAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        if(email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Sign Up Not Successful. Enter valid email/password.", Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if(!task.isSuccessful()) {
-                            System.out.println("Created account NOT succesful");
-                        }
-                        else {
-                            System.out.println("Created user sucessfully");
+                            if (!task.isSuccessful()) {
+                                System.out.println("Created account NOT succesful");
+                            } else {
+                                System.out.println("Created user sucessfully");
 
-                            User newUser = new User();
+                                User newUser = new User();
 
-                            FirebaseDatabase.getInstance().getReference("users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(LoginActivity.this, "Registration Successul!", Toast.LENGTH_LONG).show();
-                                        sendMessage();
+                                FirebaseDatabase.getInstance().getReference("users")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(LoginActivity.this, "Registration Successul!", Toast.LENGTH_LONG).show();
+                                            sendMessage();
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, "Registration Failed!", Toast.LENGTH_LONG).show();
+                                        }
                                     }
-                                    else{
-                                        Toast.makeText(LoginActivity.this, "Registration Failed!", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
+                                });
 
 
+                            }
                         }
-                    }
-                });
-
+                    });
+        }
     }
 
 
