@@ -51,18 +51,18 @@ public class Calories_Fragment extends Fragment {
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText heightEditText = getView().findViewById(R.id.heightMeters);
-                String heightText = heightEditText.getText().toString();
-                double heightDouble = Double.parseDouble(heightText);
-                EditText weightEditText = getView().findViewById(R.id.weightKilograms);
-                String weightText = weightEditText.getText().toString();
-                double weightDouble = Double.parseDouble(weightText);
+                //EditText heightEditText = getView().findViewById(R.id.heightMeters);
+                //String heightText = heightEditText.getText().toString();
+                //double heightDouble = Double.parseDouble(heightText);
+                //EditText weightEditText = getView().findViewById(R.id.weightKilograms);
+                //String weightText = weightEditText.getText().toString();
+                //double weightDouble = Double.parseDouble(weightText);
                 Spinner userInputSpinner = getView().findViewById(R.id.spinner);
                 String spinnerInput = userInputSpinner.getSelectedItem().toString();
                 EditText timeCompleteEditText = getView().findViewById(R.id.timeCompleteID);
                 String timeCompleteText = timeCompleteEditText.getText().toString();
                 double timeCompleteDouble = Double.parseDouble(timeCompleteText);
-                bmiToPrint = BMICalculator(heightDouble, weightDouble);
+                //bmiToPrint = BMICalculator(heightDouble, weightDouble);
                 String bmiToPrintString = Double.toString(bmiToPrint);
                 double valueFromHash = activityToCaloriesBurned.get(spinnerInput);
                 calorieToPrint = calculateCalories(valueFromHash,timeCompleteDouble);

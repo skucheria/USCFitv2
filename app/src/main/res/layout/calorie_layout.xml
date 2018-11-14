@@ -32,7 +32,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -40,19 +40,13 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/heightMeters"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/height_string"
-                android:inputType="numberDecimal" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -75,20 +69,8 @@
                             android:entries="@array/possibleActivities" />
                     </android.support.design.widget.TextInputLayout>
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/genderID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/gender_string"
-                        android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/weightKilograms"
-                    android:layout_width="match_parent"
-                    android:layout_height="34dp"
-                    android:hint="@string/weight_string"
-                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
@@ -130,8 +112,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="163dp"
+        android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:text="BMI and Calories Burned: "
         app:layout_constraintEnd_toEndOf="parent"
