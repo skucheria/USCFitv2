@@ -20,9 +20,12 @@ import android.widget.TimePicker;
 import com.example.team8.uscfit.objects.TodoItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -160,15 +163,33 @@ public class Todo_Fragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         lvItems = getView().findViewById(R.id.lvItems);
 
-       DatabaseReference uInfo = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-       DatabaseReference listInfo = FirebaseDatabase.getInstance().getReference("todoitems");
 
 
-       listInfo.orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+       Query listQ= mRootRef.child("todoitems");
 
 
-       System.out.println("List info object null? : " + listInfo);
+//       .orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid())
+
+       final ArrayList<TodoItem> initialItems = new ArrayList<TodoItem>();
+
+       listQ.addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+
+               for(DataSnapshot snap : dataSnapshot.getChildren()){
+                   TodoItem item = snap.getValue(TodoItem.class);
+                   System.out.println("Userid for item: " + item.getUid());
+                   if(item.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                       initialItems.add(item);
+                   }
+               }
+           }
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+
+           }
+       });
 
 
 
