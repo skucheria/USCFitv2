@@ -162,8 +162,6 @@ public class Todo_Fragment extends Fragment {
         l =  new ArrayList<TodoItem>();
         initialItems = setupList();
 
-//        System.out.println("initial items size: " + initialItems.size());
-
 
         itemsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
@@ -181,13 +179,10 @@ public class Todo_Fragment extends Fragment {
                 itemsAdapter.clear();
                 for(DataSnapshot snap : dataSnapshot.getChildren()){
                     TodoItem item = snap.getValue(TodoItem.class);
-                    l.add(item);
                     String allText = item.getDesc() + " REMINDER AT: " + item.getDateTime();
                     itemsAdapter.add(allText);
-                    System.out.println("L size: " + l.size());
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
