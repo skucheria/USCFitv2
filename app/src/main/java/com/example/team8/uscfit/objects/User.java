@@ -14,6 +14,8 @@ public class User{
     private int steps;
 
 
+
+
     public int getSteps(){
         return this.steps;
     }

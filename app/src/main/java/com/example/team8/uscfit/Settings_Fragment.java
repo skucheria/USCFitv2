@@ -10,10 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.team8.uscfit.objects.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class Settings_Fragment extends Fragment {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -34,6 +39,8 @@ public class Settings_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        fillField();
 
         View view = inflater.inflate(R.layout.settings_layout, container, false);
         Button btnWeight = view.findViewById(R.id.btn_weight);
@@ -95,5 +102,46 @@ public class Settings_Fragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void fillField(){
+        Query initial= mRootRef.child("users");
+
+        initial.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snap : dataSnapshot.getChildren()){
+
+                    if(snap.getKey().equals(uid)){
+                        User u = snap.getValue(User.class);
+
+
+                        System.out.println("USER HAS ANYTHING?  " + user.getUid());
+
+                        EditText weightText = getView().findViewById(R.id.weightText);
+                        weightText.setText(Integer.toString(u.getWeight()));
+
+                        EditText height = getView().findViewById(R.id.heightText);
+                        height.setText(Integer.toString(u.getHeight()));
+
+                        EditText gender = getView().findViewById(R.id.genderText);
+                        if(u.getGender() == 1){
+                            gender.setText("Male");
+                        }
+                        else{
+                            gender.setText("Female");
+                        }
+
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
