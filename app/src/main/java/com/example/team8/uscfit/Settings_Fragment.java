@@ -58,7 +58,6 @@ public class Settings_Fragment extends Fragment {
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("weight").setValue(Integer.parseInt(weight));
 
-                weightText.setText(" ");
             }
         });
 
@@ -71,7 +70,6 @@ public class Settings_Fragment extends Fragment {
                 FirebaseDatabase.getInstance().getReference("users")
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("height").setValue(Integer.parseInt(height));
-                heightText.setText(" ");
             }
         });
         // we don't really even use this for anything so...
@@ -86,7 +84,6 @@ public class Settings_Fragment extends Fragment {
                 FirebaseDatabase.getInstance().getReference("users")
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("gender").setValue(g);
-                genderText.setText(" ");
             }
         });
 
