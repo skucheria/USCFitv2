@@ -143,26 +143,28 @@ public class Todo_Fragment extends Fragment {
                     DatabaseReference newRef = mRootRef.child("todoitems").push();
                     newRef.setValue(tdi);
 
-                    itemsAdapter.add(allText);
-                    etNewItem.setText("");
-                    txtDate.getText().clear();
-                    txtTime.getText().clear();
-
-
                     Snackbar snackbar = Snackbar
                             .make(view, "REMINDER: "  + itemText, Snackbar.LENGTH_LONG);
                     //Date currentTime = Calendar.getInstance().getTime();
                     //String dateComponents[] = currentTime.toString().split(" ");
                     //Integer hour = Integer.parseInt(dateComponents[3].split(":")[0]);
+                    String day = dateText.split("-")[2];
 
                     Integer hour = Integer.parseInt(timeText.split(":")[0]);
-                    if (hour < 17)
+                    if (hour < 17 && day.equals("02"))
                     {
                         snackbar.show();
                     }
 
                     System.out.println("PHONE TIME: " + hour);
+                    System.out.println("DAY: " + day);
                     System.out.println("ACTIVITY TIME: " + timeText);
+
+                    // clear fields
+                    itemsAdapter.add(allText);
+                    etNewItem.setText("");
+                    txtDate.getText().clear();
+                    txtTime.getText().clear();
                 }
             }
         });
