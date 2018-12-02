@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Todo_Fragment extends Fragment {
+    // private Set<Integer> completedPositions = new HashSet<Integer>();
     private ArrayList<String> items;
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
@@ -49,9 +51,6 @@ public class Todo_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-
-
         items = ((MainActivity) getActivity()).sendToDo();
     }
 
@@ -62,7 +61,7 @@ public class Todo_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.todo_layout, container, false);
+        final View view = inflater.inflate(R.layout.todo_layout, container, false);
         Button button = view.findViewById(R.id.btnAddItem);
         Button btnDatePicker = view.findViewById(R.id.btn_date);
         Button btnTimePicker = view.findViewById(R.id.btn_time);
@@ -149,6 +148,10 @@ public class Todo_Fragment extends Fragment {
                     txtDate.getText().clear();
                     txtTime.getText().clear();
                 }
+
+                Snackbar snackbar = Snackbar
+                        .make(view, "I'm a bitch", Snackbar.LENGTH_LONG);
+                snackbar.show();
             }
         });
 
@@ -211,4 +214,6 @@ public class Todo_Fragment extends Fragment {
 
                 });
     }
+
+
 }
