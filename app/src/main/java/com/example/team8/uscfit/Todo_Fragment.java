@@ -153,7 +153,8 @@ public class Todo_Fragment extends Fragment {
                 Snackbar snackbar = Snackbar
                         .make(view, "I'm a bitch", Snackbar.LENGTH_LONG);
                 Date currentTime = Calendar.getInstance().getTime();
-                System.out.println("PHONE TIME: " + currentTime);
+                String dateComponents[] = currentTime.toString().split(" ");
+                System.out.println("PHONE TIME: " + dateComponents[3]);
                 System.out.println("ACTIVITY TIME: " + timeText);
 
                 snackbar.show();
