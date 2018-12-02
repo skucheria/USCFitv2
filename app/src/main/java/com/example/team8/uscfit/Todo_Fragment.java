@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Todo_Fragment extends Fragment {
     // private Set<Integer> completedPositions = new HashSet<Integer>();
@@ -151,6 +152,10 @@ public class Todo_Fragment extends Fragment {
 
                 Snackbar snackbar = Snackbar
                         .make(view, "I'm a bitch", Snackbar.LENGTH_LONG);
+                Date currentTime = Calendar.getInstance().getTime();
+                System.out.println("PHONE TIME: " + currentTime);
+                System.out.println("ACTIVITY TIME: " + timeText);
+
                 snackbar.show();
             }
         });
