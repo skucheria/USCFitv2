@@ -253,7 +253,7 @@ public class Todo_Fragment extends Fragment {
 
                         }
                         else{ //more than 7, get a "bigger badge" and make gold or some shit
-                            item.setBackgroundColor(Color.RED);
+                            item.setBackgroundColor(Color.YELLOW);
                         }
                         // Refresh the adapter
                         itemsAdapter.notifyDataSetChanged();
