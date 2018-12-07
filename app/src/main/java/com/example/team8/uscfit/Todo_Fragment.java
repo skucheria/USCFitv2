@@ -2,6 +2,7 @@ package com.example.team8.uscfit;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -30,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class Todo_Fragment extends Fragment {
     // private Set<Integer> completedPositions = new HashSet<Integer>();
@@ -37,6 +39,7 @@ public class Todo_Fragment extends Fragment {
     private ArrayAdapter<String> itemsAdapter;
     private ListView lvItems;
     private ArrayList<TodoItem> initialItems = new ArrayList<TodoItem>();
+    private HashMap<Integer,Integer> completed = new HashMap<Integer, Integer>(); //list index to number of long presses
 
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String uid = user.getUid();
@@ -181,7 +184,32 @@ public class Todo_Fragment extends Fragment {
 
 
         itemsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
-        lvItems.setAdapter(itemsAdapter);
+//        lvItems.setAdapter(itemsAdapter);
+
+
+        lvItems.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+             View row = super.getView(position, convertView, parent);
+
+             completed.put(position,0);
+
+             if(getItem(position).equals("")){
+                 row.setBackgroundColor(Color.GREEN);
+             }
+//             if(getItem(position).equals("Somebody gets killed"))
+//             {
+//               // do something change color
+//               row.setBackgroundColor (Color.RED); // some color
+//             }
+//             else
+//             {
+//                 // default state
+//               row.setBackgroundColor (Color.WHITE); // default coloe
+//             }
+               return row;
+        }
+        });
 
 
         setupListViewListener();
@@ -216,11 +244,21 @@ public class Todo_Fragment extends Fragment {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id) {
                         // Remove the item within array at position
-                        items.remove(pos);
+                        completed.put(pos, completed.get(pos) + 1);
+                        int k = completed.get(pos);
+                        if(k == 1){ //turn light green
+                            item.setBackgroundColor(Color.GREEN);
+                        }
+                        if(k < 7){ //keep light green dont change color
+
+                        }
+                        else{ //more than 7, get a "bigger badge" and make gold or some shit
+                            item.setBackgroundColor(Color.RED);
+                        }
                         // Refresh the adapter
                         itemsAdapter.notifyDataSetChanged();
 
-                        ((MainActivity) getActivity()).updateToDo(items);
+//                        ((MainActivity) getActivity()).updateToDo(items);
 
                         // Return true consumes the long click event (marks it handled)
                         return true;
